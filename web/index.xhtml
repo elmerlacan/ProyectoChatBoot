@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>ChatBot</title>
+            </f:facet>
+        </h:head>
+
+        <h:body style="background-image: url('Resources/background_oso_5.jpg');background-repeat: no-repeat;background-size: 100%;">
+
+            <h:form id="formPrincipal">
+                <p:inputText value="#{chatBean.nombre}" required="true" placeholder="INGRESE NOMBRE"/>
+                <p:commandButton value="Agregar" rendered="#{chatBean.enable}" update=":formPrincipal" actionListener="#{chatBean.agregarNombre()}" />
+
+
+                <p:scrollPanel style="height: 600px;width: 400px;padding: 30px;background: burlywood;border-radius: 10px;background:rgba(0,0,0,0.5);" id="panelMaster">
+
+                    <p:dataScroller value="#{chatBean.mensajes}" scrollHeight="500" var="msg" chunkSize="10" style="width: 300px!important;">
+                        <f:facet name="header">
+                            CHAT
+                        </f:facet>
+
+                        <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
+                            <p:graphicImage url="Resources/#{msg[0]}" width="50" height="50"/> 
+
+                            <p:outputPanel>
+                                <h:panelGrid columns="2" cellpadding="5">
+                                    
+                                    <h:outputText value="#{msg[1]}" style="font-weight: bold"/>
+
+                                    <p:outputLabel value="#{msg[2]}" style="background: lightblue;"/>
+
+                                </h:panelGrid>
+                            </p:outputPanel>
+                        </h:panelGrid>
+                    </p:dataScroller>
+
+                    <p:inputText value="#{chatBean.mensaje}" placeholder="MENSAJE" style="width: 290px;"/>
+                    <p:commandButton value="Enviar" update=":formPrincipal" disabled="#{chatBean.enable}" actionListener="#{chatBean.agregarMensaje()}" />
+                </p:scrollPanel>
+            </h:form>
+
+        </h:body>
+
+    </f:view>
+</html>
